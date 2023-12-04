@@ -1,6 +1,7 @@
 package main
 
 import (
+	"backend/api/about_me"
 	connect_firebase "backend/firebase"
 	"context"
 	"log"
@@ -30,5 +31,8 @@ func main() {
 			"message": "Hello World",
 		})
 	})
+	router.GET("/about_me", about_me.GetAboutMe)
+	router.POST("/about_me", about_me.PostAboutMe)
+	router.GET("/about_me/:id", about_me.GetAboutMeById)
 	router.Run("localhost:8080")
 }
