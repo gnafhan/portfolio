@@ -2,6 +2,7 @@ package main
 
 import (
 	"backend/api/about_me"
+	"backend/api/certificates"
 	connect_firebase "backend/firebase"
 	"context"
 	"log"
@@ -31,10 +32,18 @@ func main() {
 			"message": "Hello World",
 		})
 	})
+
 	router.GET("/about_me", about_me.GetAboutMe)
 	router.GET("/about_me/:id", about_me.GetAboutMeById)
 	router.POST("/about_me", about_me.PostAboutMe)
 	router.PUT("/about_me/:id", about_me.EditAboutMe)
 	router.DELETE("/about_me/:id", about_me.DeleteAboutMe)
+
+	router.GET("/certificates", certificates.GetCertificates)
+	router.GET("/certificates/:id", certificates.GetCertificateById)
+	router.POST("/certificates", certificates.PostCertificate)
+	router.PUT("/certificates/:id", certificates.EditCertificate)
+	router.DELETE("/certificates/:id", certificates.DeleteCertificate)
+
 	router.Run("localhost:8080")
 }

@@ -27,6 +27,7 @@ func GetAboutMe(c *gin.Context) {
 		// generate id from firebase
 		about_me.ID = doc.Ref.ID
 		about_me.CreatedAt = doc.CreateTime
+		about_me.UpdatedAt = doc.UpdateTime
 		doc.DataTo(&about_me)
 		datas = append(datas, about_me)
 	}
@@ -56,6 +57,7 @@ func GetAboutMeById(c *gin.Context) {
 			// generate id from firebase
 			about_me.ID = doc.Ref.ID
 			about_me.CreatedAt = doc.CreateTime
+			about_me.UpdatedAt = doc.UpdateTime
 			doc.DataTo(&about_me)
 		}
 	}
