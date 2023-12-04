@@ -1,4 +1,4 @@
-package socmed
+package projects
 
 import (
 	connect_firebase "backend/firebase"
@@ -8,27 +8,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetSocmed(c *gin.Context) {
+func GetProject(c *gin.Context) {
 	// get data
 	client := connect_firebase.Connection()
 	defer client.Close()
 
-	docs, err := client.Collection("socmed").Documents(c).GetAll()
+	docs, err := client.Collection("projects").Documents(c).GetAll()
 	if err != nil {
 		log.Println(err)
 	}
 
-	datas := []models.SocialMedia{}
+	datas := []models.Project{}
 
-	var socmed models.SocialMedia
+	var projects models.Project
 
 	for _, doc := range docs {
 		// generate id from firebase
-		socmed.ID = doc.Ref.ID
-		socmed.CreatedAt = doc.CreateTime
-		socmed.UpdatedAt = doc.UpdateTime
-		doc.DataTo(&socmed)
-		datas = append(datas, socmed)
+		projects.ID = doc.Ref.ID
+		projects.CreatedAt = doc.CreateTime
+		projects.UpdatedAt = doc.UpdateTime
+		doc.DataTo(&projects)
+		datas = append(datas, projects)
 	}
 
 	c.JSON(200, gin.H{
@@ -36,7 +36,7 @@ func GetSocmed(c *gin.Context) {
 	})
 }
 
-func GetSocmedById(c *gin.Context) {
+func GetProjectById(c *gin.Context) {
 	client := connect_firebase.Connection()
 	defer client.Close()
 
@@ -44,22 +44,22 @@ func GetSocmedById(c *gin.Context) {
 	is_any := false
 
 	// get data from firebase
-	docs, err := client.Collection("socmed").Documents(c).GetAll()
+	docs, err := client.Collection("projects").Documents(c).GetAll()
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": err,
 		})
 	}
 
-	var socmed models.SocialMedia
+	var projects models.Project
 	for _, doc := range docs {
 		if doc.Ref.ID == id {
 			// generate id from firebase
 			is_any = true
-			socmed.ID = doc.Ref.ID
-			socmed.CreatedAt = doc.CreateTime
-			socmed.UpdatedAt = doc.UpdateTime
-			doc.DataTo(&socmed)
+			projects.ID = doc.Ref.ID
+			projects.CreatedAt = doc.CreateTime
+			projects.UpdatedAt = doc.UpdateTime
+			doc.DataTo(&projects)
 		}
 	}
 
@@ -70,6 +70,6 @@ func GetSocmedById(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{
-		"message": socmed,
+		"message": projects,
 	})
 }
