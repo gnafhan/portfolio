@@ -24,7 +24,7 @@ func EditProject(c *gin.Context) {
 
 	_, err = client.Collection("projects").Doc(id).Set(c, map[string]interface{}{
 		"title":        projects.Title,
-		"decription":   projects.Description,
+		"description":  projects.Description,
 		"image":        projects.Image,
 		"url":          projects.URL,
 		"technologies": projects.Technologies,

@@ -22,7 +22,7 @@ func PostProject(c *gin.Context) {
 
 	_, _, err = client.Collection("projects").Add(c, map[string]interface{}{
 		"title":        projects.Title,
-		"decription":   projects.Description,
+		"description":  projects.Description,
 		"image":        projects.Image,
 		"url":          projects.URL,
 		"technologies": projects.Technologies,

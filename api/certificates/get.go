@@ -62,6 +62,8 @@ func GetCertificateById(c *gin.Context) {
 			certificate.ID = doc.Ref.ID
 			certificate.CreatedAt = doc.CreateTime
 			certificate.UpdatedAt = doc.UpdateTime
+			date_earned := doc.Data()["date_earned"]
+			certificate.DateEarned = date_earned.(time.Time)
 			doc.DataTo(&certificate)
 		}
 	}
