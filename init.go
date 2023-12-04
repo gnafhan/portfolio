@@ -7,37 +7,18 @@ import (
 	"backend/api/projects"
 	"backend/api/socmed"
 	"backend/api/technologies"
-	connect_firebase "backend/firebase"
 	"backend/middleware"
-	"context"
-	"log"
+	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
-	router.GET("/", func(c *gin.Context) {
-		// post demo data to firebase
-		client := connect_firebase.Connection()
-		defer client.Close()
-
-		_, _, err := client.Collection("about_me").Add(context.Background(), map[string]interface{}{
-			"name":        "Nguyen Van A",
-			"title":       "Software Engineer",
-			"description": "I am a software engineer",
-			"skills":      []string{"Golang", "Python", "Java"},
-		})
-
-		if err != nil {
-			log.Fatalf("Failed adding alovelace: %v", err)
-		}
-
-		c.JSON(200, gin.H{
-			"message": "Hello World",
-		})
-	})
-
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*"} // You may replace "*" with specific origins
+	router.Use(cors.New(config))
 	router.Use(middleware.ApiKey)
 	router.GET("/about_me", about_me.GetAboutMe)
 	router.GET("/about_me/:id", about_me.GetAboutMeById)
@@ -75,5 +56,11 @@ func main() {
 	router.PUT("/technologies/:id", technologies.EditTechnology)
 	router.DELETE("/technologies/:id", technologies.DeleteTechnology)
 
-	router.Run("localhost:8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	router.Run(":" + port)
+
 }

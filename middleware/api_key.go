@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -11,7 +12,7 @@ import (
 func ApiKey(c *gin.Context) {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Println(err)
 	}
 
 	req_api_key := c.Request.Header.Get("api_key")
