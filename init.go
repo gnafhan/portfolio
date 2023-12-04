@@ -3,6 +3,7 @@ package main
 import (
 	"backend/api/about_me"
 	"backend/api/certificates"
+	"backend/api/socmed"
 	connect_firebase "backend/firebase"
 	"context"
 	"log"
@@ -44,6 +45,12 @@ func main() {
 	router.POST("/certificates", certificates.PostCertificate)
 	router.PUT("/certificates/:id", certificates.EditCertificate)
 	router.DELETE("/certificates/:id", certificates.DeleteCertificate)
+
+	router.GET("/socmed", socmed.GeSocmed)
+	router.GET("/socmed/:id", socmed.GetSocmedById)
+	router.POST("/socmed", socmed.PostSocmed)
+	router.PUT("/socmed/:id", socmed.EditSocmed)
+	router.DELETE("/socmed/:id", socmed.DeleteSocmed)
 
 	router.Run("localhost:8080")
 }
