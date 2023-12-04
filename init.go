@@ -32,7 +32,9 @@ func main() {
 		})
 	})
 	router.GET("/about_me", about_me.GetAboutMe)
-	router.POST("/about_me", about_me.PostAboutMe)
 	router.GET("/about_me/:id", about_me.GetAboutMeById)
+	router.POST("/about_me", about_me.PostAboutMe)
+	router.PUT("/about_me/:id", about_me.EditAboutMe)
+	router.DELETE("/about_me/:id", about_me.DeleteAboutMe)
 	router.Run("localhost:8080")
 }
