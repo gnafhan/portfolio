@@ -21,6 +21,7 @@ type Certificate struct {
 	Authority  string    `json:"authority"`
 	Credential string    `json:"credential"`
 	URL        string    `json:"url"`
+	Image      string    `json:"image"`
 	DateEarned time.Time `json:"date_earned"`
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
@@ -31,6 +32,7 @@ type SocialMedia struct {
 	Platform  string    `json:"platform"`
 	Username  string    `json:"username"`
 	URL       string    `json:"url"`
+	Icon      string    `json:"icon"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -41,6 +43,7 @@ type Project struct {
 	Description  string    `json:"description"`
 	Technologies []string  `json:"technologies"`
 	URL          string    `json:"url"`
+	Image        string    `json:"image"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
 }

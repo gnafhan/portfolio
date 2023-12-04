@@ -28,6 +28,7 @@ func EditCertificate(c *gin.Context) {
 		"credential":  certificate.Credential,
 		"url":         certificate.URL,
 		"date_earned": certificate.DateEarned,
+		"image":       certificate.Image,
 	})
 
 	if err != nil {
