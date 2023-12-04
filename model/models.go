@@ -70,6 +70,7 @@ type Technology struct {
 	ID        string    `json:"id"`
 	Icon      string    `json:"icon"`
 	Name      string    `json:"name"`
+	Skill     int       `json:"skill"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }

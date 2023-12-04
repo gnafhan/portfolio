@@ -6,6 +6,7 @@ import (
 	"backend/api/journey"
 	"backend/api/projects"
 	"backend/api/socmed"
+	"backend/api/technologies"
 	connect_firebase "backend/firebase"
 	"context"
 	"log"
@@ -65,6 +66,12 @@ func main() {
 	router.POST("/journey", journey.PostJourney)
 	router.PUT("/journey/:id", journey.EditJourney)
 	router.DELETE("/journey/:id", journey.DeleteJourney)
+
+	router.GET("/technologies", technologies.GetTechnology)
+	router.GET("/technologies/:id", technologies.GetTechnologyById)
+	router.POST("/technologies", technologies.PostTechnology)
+	router.PUT("/technologies/:id", technologies.EditTechnology)
+	router.DELETE("/technologies/:id", technologies.DeleteTechnology)
 
 	router.Run("localhost:8080")
 }
