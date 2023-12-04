@@ -8,6 +8,7 @@ import (
 	"backend/api/socmed"
 	"backend/api/technologies"
 	connect_firebase "backend/firebase"
+	"backend/middleware"
 	"context"
 	"log"
 
@@ -37,6 +38,7 @@ func main() {
 		})
 	})
 
+	router.Use(middleware.ApiKey)
 	router.GET("/about_me", about_me.GetAboutMe)
 	router.GET("/about_me/:id", about_me.GetAboutMeById)
 	router.POST("/about_me", about_me.PostAboutMe)
