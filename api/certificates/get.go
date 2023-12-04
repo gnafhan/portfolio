@@ -4,6 +4,7 @@ import (
 	connect_firebase "backend/firebase"
 	models "backend/model"
 	"log"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,6 +28,8 @@ func GetCertificates(c *gin.Context) {
 		certificate.ID = doc.Ref.ID
 		certificate.CreatedAt = doc.CreateTime
 		certificate.UpdatedAt = doc.UpdateTime
+		date_earned := doc.Data()["date_earned"]
+		certificate.DateEarned = date_earned.(time.Time)
 		doc.DataTo(&certificate)
 		datas = append(datas, certificate)
 	}
@@ -41,6 +44,7 @@ func GetCertificateById(c *gin.Context) {
 	defer client.Close()
 
 	id := c.Param("id")
+	is_any := false
 
 	// get data from firebase
 	docs, err := client.Collection("certificates").Documents(c).GetAll()
@@ -54,6 +58,7 @@ func GetCertificateById(c *gin.Context) {
 	for _, doc := range docs {
 		if doc.Ref.ID == id {
 			// generate id from firebase
+			is_any = true
 			certificate.ID = doc.Ref.ID
 			certificate.CreatedAt = doc.CreateTime
 			certificate.UpdatedAt = doc.UpdateTime
@@ -61,6 +66,12 @@ func GetCertificateById(c *gin.Context) {
 		}
 	}
 
+	if is_any == false {
+		c.JSON(404, gin.H{
+			"message": "Not found",
+		})
+		return
+	}
 	c.JSON(200, gin.H{
 		"message": certificate,
 	})

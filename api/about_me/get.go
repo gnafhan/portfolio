@@ -42,6 +42,7 @@ func GetAboutMeById(c *gin.Context) {
 	defer client.Close()
 
 	id := c.Param("id")
+	is_any := false
 
 	// get data from firebase
 	docs, err := client.Collection("about_me").Documents(c).GetAll()
@@ -55,11 +56,19 @@ func GetAboutMeById(c *gin.Context) {
 	for _, doc := range docs {
 		if doc.Ref.ID == id {
 			// generate id from firebase
+			is_any = true
 			about_me.ID = doc.Ref.ID
 			about_me.CreatedAt = doc.CreateTime
 			about_me.UpdatedAt = doc.UpdateTime
 			doc.DataTo(&about_me)
 		}
+	}
+
+	if is_any == false {
+		c.JSON(404, gin.H{
+			"message": "Not found",
+		})
+		return
 	}
 
 	c.JSON(200, gin.H{
